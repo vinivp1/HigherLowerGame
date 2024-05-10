@@ -18,29 +18,55 @@ def choose_B(data):
     country_B = person_B.get('country')
     return name_B, followers_B, description_B, country_B
 
-
-person_A = choose_A(data)
-person_B = choose_B(data)
-
-# print(person_A) #teste
-# print(person_B, "\n") #teste
-
 def game(person_A, person_B):
     print(f"Compare A: {person_A[0]}, a {person_A[2]}, from {person_A[3]}.")
     print("\n                    VS                   \n")
-    print(f"Compare A: {person_B[0]}, a {person_B[2]}, from {person_B[3]}.")
+    print(f"Compare B: {person_B[0]}, a {person_B[2]}, from {person_B[3]}.")
 
+person_A = choose_A(data)
+person_B = choose_B(data)
+print(logo)
 game(person_A, person_B)
-
-answer = input(print("Who has more followers? Type 'A' or 'B': "))
+answer = input("Who has more followers on ig? Type 'A' or 'B': ")
 
 score = 0
+should_continue = True
 
-if answer == 'A':
-    if person_A[1] > person_B[1]:
-        score += 1
-        person_A = person_B
-        choose_B()
+while should_continue:
+    if answer == 'A' or answer == 'a':
+        if person_A[1] > person_B[1]:
+            score += 1
+            person_A = person_B[:]
+            person_B = choose_B(data)
+            print(f"You're right! Current score: {score}.\n")
+            game(person_A, person_B)
+            answer = input("Who has more followers on ig? Type 'A' or 'B': ")
+        elif person_A[1] == person_B[1]:
+            print("It's a draw!")
+            person_A = choose_A(data)
+            person_B = choose_B(data)
+            game(person_A, person_B)
+            answer = input("Who has more followers on ig? Type 'A' or 'B': ")
+        else:
+            print(f"Sorry, that's wrong. Final score: {score}")
+            should_continue = False
+    elif answer == 'B' or answer == 'b':
+        if person_B[1] > person_A[1]:
+            score += 1
+            person_A = person_B[:]
+            person_B = choose_B(data)
+            print(f"You're right! Current score: {score}.\n")
+            game(person_A, person_B)
+            answer = input("Who has more followers on ig? Type 'A' or 'B': ")
+        elif person_B[1] == person_A[1]:
+            print("It's a draw!")
+            person_A = choose_A(data)
+            person_B = choose_B(data)
+            game(person_A, person_B)
+            answer = input("Who has more followers on ig? Type 'A' or 'B': ")
+        else:
+            print(f"Sorry, that's wrong. Final score: {score}")
+            should_continue = False
     else:
         print(f"Sorry, that's wrong. Final score: {score}")
-
+        should_continue = False
